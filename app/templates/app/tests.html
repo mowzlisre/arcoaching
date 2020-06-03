@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for test in tests %}
+        {% if not request.user in test.students.all %}
+            <div class="card">
+                <div class="card-header">
+                    <a class="h4">{{test.subject}}</a>
+                    <a class="float-right my-auto py-auto">Duration:
+                        {{test.time}}Hrs</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{test.titel}}</h5>
+                    <p class="card-text">{{test.description}}</p>
+                    <a href="{% url 'attend' pk=test.id %}" class="btn btn-primary">Take test!</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Test posted on
+                    {{test.date}}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <hr>
+    {% for report in reports %}
+        <div class="card">
+            <div class="card-header">
+                <a class="h4">{{report.test.subject}}</a>
+                <a class="float-right my-auto py-auto">Duration:
+                    {{report.test.time}}Hrs</a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{report.test.titel}}</h5>
+                <p class="card-text">{{report.test.description}}</p>
+                <a href="{% url 'report' pk=report.id %}" class="btn btn-primary">View Report</a>
+            </div>
+            <div class="card-footer text-muted">
+                Test posted on
+                {{report.test.date}}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock content %}
